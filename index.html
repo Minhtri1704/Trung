@@ -33,28 +33,9 @@
             transition: opacity 1s ease-in-out;
         }
         .invitation-card.hidden {
-            animation: openGift 1s forwards;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
-        @keyframes openGift {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.2); opacity: 0; }
-        }
-        .ribbon {
-            background: gold;
-            padding: 10px 30px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .ribbon:hover {
-            transform: scale(1.1);
-        }
-        .hidden {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
         .beach-symbols {
             position: absolute;
             top: 0;
@@ -88,22 +69,43 @@
         <p style="color: black; font-size: 32px; font-weight: bold;">Khui blindbox cùng Trung và Yến nha</p>
         <div class="ribbon" onclick="openInvitation()">Mở Thiệp</div>
     </div>
-    <audio id="backgroundMusic" loop>
+    <audio id="backgroundMusic" loop autoplay>
         <source src="assets/beautiful_in_white.mp3" type="audio/mpeg">
     </audio>
-    <div class="love-symbols" style="display: none;">❤️ T & Q | 16 Years of Relationships | Endless Love ❤️</div>
     <div class="container" id="mainContent" style="display: none;">
         <div class="invitation">
-    <div class="container" id="mainContent" style="display: none;">
-        <div class="invitation">
-            <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" style="width: 150px; height: auto; border-radius: 10px;">
-            <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" style="width: 150px; height: auto; border-radius: 10px;">
-            <img src="assets/thiep_cuoi_3.jpg" alt="Thiệp Cưới 3" style="width: 150px; height: auto; border-radius: 10px;">
-            <img src="assets/thiep_cuoi_4.jpg" alt="Thiệp Cưới 4" style="width: 150px; height: auto; border-radius: 10px;">
-            <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" style="width: 150px; height: auto; border-radius: 10px;">
-            <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" style="width: 150px; height: auto; border-radius: 10px;">
+            <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" class="floating-img">
+            <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" class="floating-img">
+            <img src="assets/thiep_cuoi_3.jpg" alt="Thiệp Cưới 3" class="floating-img">
+            <img src="assets/thiep_cuoi_4.jpg" alt="Thiệp Cưới 4" class="floating-img">
+            <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" class="floating-img">
+            <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" class="floating-img">
         </div>
     </div>
+
+    <!-- RSVP and Wishes Sections -->
+    <div class="rsvp-container">
+        <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
+        <button onclick="submitRSVP(true)">Có</button>
+        <button onclick="submitRSVP(false)">Không</button>
+    </div>
+
+    <div class="wishes">
+        <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
+        <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
+        <button onclick="submitWish()">Gửi</button>
+    </div>
+
+    <div class="admin-panel">
+        <h3>Quản lý phản hồi</h3>
+        <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
+        <button onclick="checkAdminAccess()">Xem phản hồi</button>
+        <div id="adminContent" style="display: none; margin-top: 20px;">
+            <h4>Danh sách khách mời & Lời chúc</h4>
+            <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
+        </div>
+    </div>
+
     <script>
         function openInvitation() {
             document.getElementById("invitationCard").classList.add("hidden");
@@ -113,42 +115,7 @@
                 document.getElementById("backgroundMusic").play();
             }, 1000);
         }
-        <div class="rsvp-container">
-            <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
-            <button onclick="submitRSVP(true)">Có</button>
-            <button onclick="submitRSVP(false)">Không</button>
-        </div>
-        <div class="wishes">
-            <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
-            <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
-            <button onclick="submitWish()">Gửi</button>
-        </div>
-        <div class="admin-panel">
-            <h3>Quản lý phản hồi</h3>
-            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
-            <button onclick="checkAdminAccess()">Xem phản hồi</button>
-            <div id="adminContent" style="display: none; margin-top: 20px;">
-                <h4>Danh sách khách mời & Lời chúc</h4>
-                <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
-            </div>
-        </div>
-    </div>
-    <script>
-        function openInvitation() {
-            document.getElementById("invitationCard").classList.add("hidden");
-            function openInvitation() {
-    let card = document.getElementById("invitationCard");
-    card.classList.add("hidden");
-    card.addEventListener("animationend", () => {
-        card.style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-        document.getElementById("backgroundMusic").play();
-    }, { once: true });
-}
-                document.getElementById("invitationCard").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-            }, 1000);
-        }
+
         function checkAdminAccess() {
             let password = document.getElementById("adminPassword").value;
             if (password === "123456") {
@@ -156,6 +123,15 @@
             } else {
                 alert("Mật khẩu sai! Vui lòng thử lại.");
             }
+        }
+
+        function submitRSVP(response) {
+            console.log("RSVP submitted: " + (response ? "Có" : "Không"));
+        }
+
+        function submitWish() {
+            let wish = document.getElementById("wishMessage").value;
+            console.log("Lời chúc: " + wish);
         }
     </script>
 </body>
