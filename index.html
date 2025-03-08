@@ -20,10 +20,6 @@
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background-image: url('assets/box_with_question_heart.png'); /* Thay đổi background */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,11 +29,67 @@
             font-weight: bold;
             z-index: 1000;
             transition: opacity 1s ease-in-out;
+            background-color: transparent;
         }
         .invitation-card.hidden {
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
+        /* Tạo hộp quà */
+        .gift-box {
+            width: 150px;
+            height: 150px;
+            background-color: #FF66B2; /* Màu hồng */
+            position: relative;
+            margin: 50px auto;
+            border-radius: 10px;
+        }
+
+        /* Dây ruy băng cho hộp quà */
+        .gift-box::before,
+        .gift-box::after {
+            content: "";
+            position: absolute;
+            background-color: #FF3399; /* Màu đỏ tươi cho dây ruy băng */
+            width: 10px;
+            height: 150px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .gift-box::before {
+            transform: translateX(-50%) rotate(90deg); /* Dây ruy băng ngang */
+        }
+
+        .gift-box::after {
+            transform: translateX(-50%); /* Dây ruy băng dọc */
+        }
+
+        /* Tạo trái tim ở trên hộp quà */
+        .heart {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            color: #FF3366; /* Màu đỏ của trái tim */
+        }
+
+        /* Tạo hiệu ứng trái tim nhấp nháy */
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .heart {
+            animation: blink 1s infinite;
+        }
+
         .flower-symbols {
             position: absolute;
             top: 0;
@@ -69,18 +121,17 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
             cursor: pointer;
-            object-fit: contain;  /* Đảm bảo hình ảnh vừa với khung mà không bị bể */
         }
         .floating-img:hover {
             transform: scale(1.05);
         }
-        .rsvp-container, .wishes, .admin-panel, .countdown, .thank-you-message {
+        .rsvp-container, .countdown, .thank-you-message {
             margin-top: 40px;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 15px;
         }
-        .rsvp-container button, .wishes button {
+        .rsvp-container button {
             background: #FF66B2;
             color: white;
             padding: 10px 20px;
@@ -90,12 +141,8 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        .rsvp-container button:hover, .wishes button:hover {
+        .rsvp-container button:hover {
             background: #FF3399;
-        }
-        .admin-panel {
-            margin-top: 40px;
-            text-align: center;
         }
         .countdown {
             font-size: 32px;
@@ -145,6 +192,14 @@
             width: 80%;
             text-align: center;
         }
+
+        /* Định dạng dòng tin nhắn nổi bật */
+        .rsvp-container h3 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #FF66B2;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -185,22 +240,8 @@
             }, 1000);
         }
 
-        function checkAdminAccess() {
-            let password = document.getElementById("adminPassword").value;
-            if (password === "123456") {
-                document.getElementById("adminContent").style.display = "block";
-            } else {
-                alert("Mật khẩu sai! Vui lòng thử lại.");
-            }
-        }
-
         function submitRSVP(response) {
             console.log("RSVP submitted: " + (response ? "Có" : "Không"));
-        }
-
-        function submitWish() {
-            let wish = document.getElementById("wishMessage").value;
-            console.log("Lời chúc: " + wish);
         }
 
         function showThankYou() {
@@ -215,7 +256,7 @@
 
             popup.style.display = "flex";
             popupImage.src = imageSrc;
-            popupContent.innerHTML = "Lời tâm sự của cô dâu và chú rể: Chúng mình/em/con rất mong sẽ nhận được sự hiện diện của mọi người vào ngày 10/05/2025!";
+            popupContent.innerHTML = "Lời tâm sự của cô dâu và chú rể: Chúng mình rất mong được chào đón bạn trong ngày trọng đại của Trung và Yến nha!";
         }
 
         // Hàm đóng pop-up
@@ -226,6 +267,10 @@
     </script>
 
     <div class="invitation-card" id="invitationCard">
+        <p style="color: black; font-size: 32px; font-weight: bold;">Khui blindbox cùng Trung và Yến nha</p>
+        <div class="gift-box">
+            <div class="heart">❤️</div>
+        </div>
         <div class="ribbon" onclick="openInvitation()">Mở Thiệp</div>
     </div>
 
@@ -243,30 +288,29 @@
             <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_6.jpg')">
         </div>
 
-        <!-- Các chức năng RSVP và Lời chúc -->
+        <!-- Các chức năng RSVP -->
         <div class="rsvp-container">
             <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
             <button onclick="submitRSVP(true)">Có</button>
             <button onclick="submitRSVP(false)">Không</button>
         </div>
 
-        <div class="wishes">
-            <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
-            <textarea id="wishMessage" rows="4" cols="50"></textarea><br>
-            <button onclick="submitWish()">Gửi Lời Chúc</button>
+        <!-- Đếm ngược -->
+        <div class="countdown">
+            <h3>Thời gian đến đám cưới của chúng mình!</h3>
+            <p id="countdown"></p>
         </div>
 
-        <div class="countdown" id="countdown">0d 0h 0m 0s</div>
-
+        <!-- Lời cảm ơn -->
         <div class="thank-you-message" id="thankYouMessage">
-            <p>Cảm ơn mọi người rất nhiều! Sự hiện diện của mọi người là niềm vinh hạnh của Trung và Yến.</p>
+            <p>Cảm ơn bạn đã gửi lời chúc!</p>
         </div>
     </div>
 
-    <!-- Pop-up hình ảnh -->
-    <div class="popup-overlay" id="imagePopup" onclick="closePopup()">
-        <img id="popupImage" src="" alt="Popup Image">
-        <div id="popupContent"></div>
+    <!-- Pop-up image -->
+    <div id="imagePopup" class="popup-overlay" onclick="closePopup()">
+        <img id="popupImage" src="" alt="">
+        <div id="popupContent" class="popup-content"></div>
     </div>
 </body>
 </html>
