@@ -134,7 +134,15 @@
     <script>
         function openInvitation() {
             document.getElementById("invitationCard").classList.add("hidden");
-            setTimeout(() => {
+            function openInvitation() {
+    let card = document.getElementById("invitationCard");
+    card.classList.add("hidden");
+    card.addEventListener("animationend", () => {
+        card.style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        document.getElementById("backgroundMusic").play();
+    }, { once: true });
+}
                 document.getElementById("invitationCard").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
             }, 1000);
