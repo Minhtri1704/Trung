@@ -9,6 +9,8 @@
             background: #f8f8f8;
             text-align: center;
             font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
         }
         .container {
             max-width: 800px;
@@ -17,27 +19,84 @@
             background: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            position: relative;
+            z-index: 1;
         }
         .invitation img {
             width: 100%;
             border-radius: 10px;
             margin-bottom: 10px;
         }
+        .sparkles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .rsvp-container {
+            margin-top: 20px;
+        }
+        .wishes {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <audio autoplay loop>
-        <source src="so_as_long_as_I_live.mp3" type="audio/mpeg">
+        <source src="file:///C:/Người dùng/Admin/Tải xuống/Trung/beautiful_in_white.mp3" type="audio/mpeg">
     </audio>
+    <div class="sparkles"></div>
     <div class="container">
         <div class="invitation">
-            <img src="invite_page_1.png" alt="Thiệp Cưới 1">
-            <img src="invite_page_2.png" alt="Thiệp Cưới 2">
-            <img src="invite_page_3.png" alt="Thiệp Cưới 3">
-            <img src="invite_page_4.png" alt="Thiệp Cưới 4">
-            <img src="invite_page_5.png" alt="Thiệp Cưới 5">
-            <img src="invite_page_6.png" alt="Thiệp Cưới 6">
+            <img src="file:///C:/Người dùng/Admin/Tải xuống/Trung/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1">
+            <img src="file:///C:/Người dùng/Admin/Tải xuống/Trung/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2">
+            <img src="file:///C:/Người dùng/Admin/Tải xuống/Trung/thiep_cuoi_3.jpg" alt="Thiệp Cưới 3">
+            <img src="file:///C:/Người dùng/Admin/Tải xuống/Trung/thiep_cuoi_4.jpg" alt="Thiệp Cưới 4">
+            <img src="file:///C:/Người dùng/Admin/Tải xuống/Trung/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5">
+            <img src="file:///C:/Người dùng/Admin/Tải xuống/Trung/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6">
+        </div>
+        <div class="rsvp-container">
+            <h3>Bạn có tham dự không?</h3>
+            <button onclick="submitRSVP(true)">Có</button>
+            <button onclick="submitRSVP(false)">Không</button>
+        </div>
+        <div class="wishes">
+            <h3>Gửi lời chúc đến cô dâu chú rể</h3>
+            <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
+            <button onclick="submitWish()">Gửi</button>
         </div>
     </div>
+    <script>
+        function submitRSVP(attending) {
+            alert(attending ? "Cảm ơn bạn đã xác nhận tham dự!" : "Thật tiếc khi bạn không thể tham dự!");
+        }
+        function submitWish() {
+            let message = document.getElementById("wishMessage").value;
+            if (message.trim() !== "") {
+                alert("Lời chúc của bạn đã được gửi: " + message);
+            } else {
+                alert("Vui lòng nhập lời chúc trước khi gửi!");
+            }
+        }
+        function createSparkles() {
+            const sparkleContainer = document.querySelector('.sparkles');
+            for (let i = 0; i < 50; i++) {
+                let sparkle = document.createElement('div');
+                sparkle.style.position = 'absolute';
+                sparkle.style.width = '5px';
+                sparkle.style.height = '5px';
+                sparkle.style.background = 'white';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.opacity = Math.random();
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+                sparkleContainer.appendChild(sparkle);
+            }
+        }
+        createSparkles();
+    </script>
 </body>
 </html>
