@@ -12,6 +12,8 @@
             position: relative;
             overflow: hidden;
             animation: fadeIn 2s ease-in-out;
+            height: 100vh; /* Chiều cao trang đầy đủ */
+            overflow-y: auto; /* Thêm cuộn trang theo chiều dọc */
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -50,12 +52,12 @@
         }
         /* Các hình ảnh thiệp cưới */
         .invitation img {
-            max-width: 100%; /* Đảm bảo hình ảnh không vượt quá chiều rộng của container */
-            max-height: 80vh; /* Đảm bảo chiều cao không vượt quá 80% chiều cao của cửa sổ */
+            max-width: 90%; /* Đảm bảo hình ảnh không quá rộng */
+            max-height: 50vh; /* Đảm bảo chiều cao hình ảnh không quá lớn */
             object-fit: contain; /* Đảm bảo hình ảnh không bị méo */
             margin: 10px; /* Thêm một chút không gian giữa các hình ảnh */
         }
-        
+
         /* Nút mở thiệp */
         .ribbon {
             background-color: #FFD700; /* Màu vàng cho nút */
@@ -70,15 +72,44 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-        
+
         /* Hiệu ứng khi hover */
         .ribbon:hover {
             background-color: #ffcc00; /* Màu vàng sáng hơn khi di chuột vào */
             transform: scale(1.1); /* Phóng to nhẹ khi hover */
         }
-        
+
         .ribbon:active {
             transform: scale(0.95); /* Thu nhỏ khi bấm nút */
+        }
+        
+        /* Các phần bình chọn và lời chúc */
+        .rsvp-container, .wishes, .admin-panel {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        .rsvp-container button, .wishes button {
+            background-color: #FFD700;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .rsvp-container button:hover, .wishes button:hover {
+            background-color: #ffcc00;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 10px;
         }
     </style>
 </head>
