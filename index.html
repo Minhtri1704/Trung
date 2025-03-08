@@ -10,7 +10,6 @@
             text-align: center;
             font-family: 'Times New Roman', serif;
             position: relative;
-            overflow: hidden;
             animation: fadeIn 2s ease-in-out;
         }
         @keyframes fadeIn {
@@ -71,7 +70,7 @@
         .floating-img:hover {
             transform: scale(1.05);
         }
-        .rsvp-container, .wishes, .admin-panel {
+        .rsvp-container, .wishes, .admin-panel, .countdown, .thank-you-message {
             margin-top: 40px;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
@@ -108,9 +107,10 @@
         }
         /* Cho phép cuộn trang cho toàn bộ thiệp */
         .main-content {
-            overflow-y: scroll;
-            height: 100vh; /* Cuộn toàn bộ trang */
+            overflow-y: auto;
+            max-height: 100vh; /* Cuộn toàn bộ trang */
             padding: 20px;
+            box-sizing: border-box;
         }
         /* Pop-up image */
         .popup-overlay {
@@ -211,7 +211,7 @@
 
             popup.style.display = "flex";
             popupImage.src = imageSrc;
-            popupContent.innerHTML = "Lời tâm sự của cô dâu và chú rể: Chúng mình rất mong được chào đón bạn trong ngày trọng đại của Trung và Yến!";
+            popupContent.innerHTML = "Lời tâm sự của cô dâu và chú rể: Chúng mình rất mong được chào đón bạn trong ngày trọng đại của Trung và Yến nha!";
         }
 
         // Hàm đóng pop-up
@@ -239,39 +239,40 @@
             <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_5.jpg')">
             <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_6.jpg')">
         </div>
-    </div>
 
-    <div class="popup-overlay" id="imagePopup" onclick="closePopup()">
-        <img id="popupImage" src="" alt="Popup Image">
-        <div class="popup-content" id="popupContent"></div>
-    </div>
+        <!-- Các chức năng RSVP và Lời chúc -->
+        <div class="rsvp-container">
+            <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
+            <button onclick="submitRSVP(true)">Có</button>
+            <button onclick="submitRSVP(false)">Không</button>
+        </div>
 
-    <!-- RSVP and Wishes Sections -->
-    <div class="rsvp-container">
-        <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
-        <button onclick="submitRSVP(true)">Có</button>
-        <button onclick="submitRSVP(false)">Không</button>
-    </div>
+        <div class="wishes">
+            <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
+            <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
+            <button onclick="submitWish()">Gửi</button>
+        </div>
 
-    <div class="wishes">
-        <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
-        <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
-        <button onclick="submitWish()">Gửi</button>
-    </div>
+        <div class="admin-panel">
+            <h3>Quản lý phản hồi</h3>
+            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
+            <button onclick="checkAdminAccess()">Xem phản hồi</button>
+            <div id="adminContent" style="display: none; margin-top: 20px;">
+                <h4>Danh sách khách mời & Lời chúc</h4>
+                <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
+            </div>
+        </div>
 
-    <div class="admin-panel">
-        <h3>Quản lý phản hồi</h3>
-        <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
-        <button onclick="checkAdminAccess()">Xem phản hồi</button>
-        <div id="adminContent" style="display: none; margin-top: 20px;">
-            <h4>Danh sách khách mời & Lời chúc</h4>
-            <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
+        <div class="countdown" id="countdown"></div>
+        <div class="thank-you-message" id="thankYouMessage">
+            Cảm ơn bạn đã tham gia và gửi lời chúc cho Trung và Yến nha! 💖
         </div>
     </div>
 
-    <div class="countdown" id="countdown"></div>
-    <div class="thank-you-message" id="thankYouMessage">
-        Cảm ơn bạn đã tham gia và gửi lời chúc cho Trung và Yến nha! 💖
+    <!-- Pop-up image -->
+    <div class="popup-overlay" id="imagePopup" onclick="closePopup()">
+        <img id="popupImage" src="" alt="Popup Image">
+        <div class="popup-content" id="popupContent"></div>
     </div>
 </body>
 </html>
