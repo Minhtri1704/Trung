@@ -22,10 +22,19 @@
             position: relative;
             z-index: 1;
         }
+        .invitation {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px;
+            scroll-behavior: smooth;
+        }
         .invitation img {
-            width: 100%;
+            width: 300px;
+            height: auto;
             border-radius: 10px;
-            margin-bottom: 10px;
+            flex-shrink: 0;
         }
         .sparkles {
             position: fixed;
