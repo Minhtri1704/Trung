@@ -18,10 +18,40 @@
             to { opacity: 1; }
         }
         .invitation-card {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            background: url('assets/vietnamese_pattern.jpg') center center / contain no-repeat;
+            background: linear-gradient(to bottom, #ff99cc, #ff66b2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: black;
+            font-size: 32px;
+            font-weight: bold;
+            z-index: 1000;
+            transition: opacity 1s ease-in-out;
+            position: relative;
+        }
+        .invitation-card::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: gold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            border-radius: 10px;
+        }
+        .invitation-card::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background: red;
+            top: calc(50% - 60px);
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px 10px 0 0;
+        }
             display: flex;
             justify-content: center;
             align-items: center;
@@ -71,8 +101,8 @@
         <div class="ribbon" onclick="openInvitation()">Mở Thiệp</div>
     </div>
     
-    <audio autoplay loop>
-        <source src="assets/beautiful_in_white" type="audio/mpeg">
+    <audio autoplay loop controls>
+        <source src="assets/beautiful_in_white.mp3" type="audio/mpeg">
     </audio>
     <div class="container" id="mainContent" style="display: none;">
     <div class="love-symbols" style="font-size: 10px;">❤️ T & Q | 16 Years of Relationships | Endless Love ❤️</div>
@@ -84,26 +114,13 @@
             <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" style="width: 150px; height: auto; border-radius: 10px;">
             <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" style="width: 150px; height: auto; border-radius: 10px;">
         </div>
-    </div>
+        <div class="rsvp-container">
     <script>
         function openInvitation() {
         document.getElementById("invitationCard").style.display = "none";
         document.getElementById("mainContent").style.display = "block";
 }
 
-            function createFloatingSymbols() {
-            const icons = ['💘', '❤️', '🐱', '🐱‍👤', '💌', '💞'];
-            const container = document.querySelector('.floating-symbols');
-            for (let i = 0; i < 20; i++) {
-                let icon = document.createElement('span');
-                icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-                icon.style.left = Math.random() * 100 + 'vw';
-                icon.style.top = Math.random() * 100 + 'vh';
-                icon.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                container.appendChild(icon);
-            }
-        }
-        createFloatingSymbols();
         </div>
         <div class="rsvp-container">
             <h3>Bạn sẽ đến tham dự với chúng mình chứ ^^</h3>
