@@ -66,6 +66,7 @@
             border: 5px solid #FFCCE5; /* Viền hồng pastel */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            cursor: pointer;
         }
         .floating-img:hover {
             transform: scale(1.05);
@@ -110,6 +111,35 @@
             overflow-y: auto;
             height: 80vh;
             padding: 20px;
+        }
+        /* Pop-up image */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-overlay img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .popup-overlay .popup-content {
+            position: absolute;
+            bottom: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            width: 80%;
+            text-align: center;
         }
     </style>
 </head>
@@ -172,6 +202,23 @@
         function showThankYou() {
             document.getElementById("thankYouMessage").style.display = "block";
         }
+
+        // Hàm mở pop-up hình ảnh
+        function openImagePopup(imageSrc) {
+            const popup = document.getElementById("imagePopup");
+            const popupImage = document.getElementById("popupImage");
+            const popupContent = document.getElementById("popupContent");
+
+            popup.style.display = "flex";
+            popupImage.src = imageSrc;
+            popupContent.innerHTML = "Lời tâm sự của cô dâu và chú rể: Chúng tôi rất mong được chào đón bạn trong ngày trọng đại của chúng tôi!";
+        }
+
+        // Hàm đóng pop-up
+        function closePopup() {
+            const popup = document.getElementById("imagePopup");
+            popup.style.display = "none";
+        }
     </script>
 
     <div class="invitation-card" id="invitationCard">
@@ -185,40 +232,46 @@
 
     <div class="container" id="mainContent" style="display: none;">
         <div class="invitation">
-            <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" class="floating-img">
-            <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" class="floating-img">
-            <img src="assets/thiep_cuoi_3.jpg" alt="Thiệp Cưới 3" class="floating-img">
-            <img src="assets/thiep_cuoi_4.jpg" alt="Thiệp Cưới 4" class="floating-img">
-            <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" class="floating-img">
-            <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" class="floating-img">
+            <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_1.jpg')">
+            <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_2.jpg')">
+            <img src="assets/thiep_cuoi_3.jpg" alt="Thiệp Cưới 3" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_3.jpg')">
+            <img src="assets/thiep_cuoi_4.jpg" alt="Thiệp Cưới 4" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_4.jpg')">
+            <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_5.jpg')">
+            <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_6.jpg')">
         </div>
+    </div>
 
-        <div class="rsvp-container">
-            <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
-            <button onclick="submitRSVP(true)">Có</button>
-            <button onclick="submitRSVP(false)">Không</button>
-        </div>
+    <div class="popup-overlay" id="imagePopup" onclick="closePopup()">
+        <img id="popupImage" src="" alt="Popup Image">
+        <div class="popup-content" id="popupContent"></div>
+    </div>
 
-        <div class="wishes">
-            <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
-            <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
-            <button onclick="submitWish()">Gửi</button>
-        </div>
+    <!-- RSVP and Wishes Sections -->
+    <div class="rsvp-container">
+        <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
+        <button onclick="submitRSVP(true)">Có</button>
+        <button onclick="submitRSVP(false)">Không</button>
+    </div>
 
-        <div class="admin-panel">
-            <h3>Quản lý phản hồi</h3>
-            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
-            <button onclick="checkAdminAccess()">Xem phản hồi</button>
-            <div id="adminContent" style="display: none; margin-top: 20px;">
-                <h4>Danh sách khách mời & Lời chúc</h4>
-                <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
-            </div>
-        </div>
+    <div class="wishes">
+        <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
+        <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
+        <button onclick="submitWish()">Gửi</button>
+    </div>
 
-        <div class="countdown" id="countdown"></div>
-        <div class="thank-you-message" id="thankYouMessage">
-            Cảm ơn bạn đã tham gia và gửi lời chúc cho Trung và Yến nha! 💖
+    <div class="admin-panel">
+        <h3>Quản lý phản hồi</h3>
+        <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
+        <button onclick="checkAdminAccess()">Xem phản hồi</button>
+        <div id="adminContent" style="display: none; margin-top: 20px;">
+            <h4>Danh sách khách mời & Lời chúc</h4>
+            <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
         </div>
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+    <div class="thank-you-message" id="thankYouMessage">
+        Cảm ơn bạn đã tham gia và gửi lời chúc cho chúng tôi! 💖
     </div>
 </body>
 </html>
