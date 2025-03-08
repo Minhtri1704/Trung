@@ -94,18 +94,6 @@
         document.getElementById("mainContent").style.display = "block";
 }
 
-            function createFloatingSymbols() {
-            const icons = ['💘', '❤️', '🐱', '🐱‍👤', '💌', '💞'];
-            const container = document.querySelector('.floating-symbols');
-            for (let i = 0; i < 20; i++) {
-                let icon = document.createElement('span');
-                icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-                icon.style.left = Math.random() * 100 + 'vw';
-                icon.style.top = Math.random() * 100 + 'vh';
-                icon.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                container.appendChild(icon);
-            }
-        }
         createFloatingSymbols();
         </div>
         <div class="rsvp-container">
