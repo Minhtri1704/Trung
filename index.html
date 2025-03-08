@@ -21,7 +21,7 @@
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background: red;
+            background: url('assets/vietnamese_pattern.jpg') center/cover no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,21 +47,24 @@
             opacity: 0;
             pointer-events: none;
         }
-        .invitation {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px;
+        .love-symbols {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ff1493;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            animation: marquee 10s linear infinite alternate;
         }
-        .invitation img {
-            width: 200px;
-            height: auto;
-            border-radius: 10px;
-            transition: transform 0.3s ease-in-out;
+        @keyframes marquee {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+            100% { transform: translateX(-50%) translateY(0); }
         }
-        .invitation img:hover {
-            transform: scale(1.05);
+        .admin-panel {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -96,6 +99,15 @@
             <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
             <button onclick="submitWish()">Gửi</button>
         </div>
+        <div class="admin-panel">
+            <h3>Quản lý phản hồi</h3>
+            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
+            <button onclick="checkAdminAccess()">Xem phản hồi</button>
+            <div id="adminContent" style="display: none; margin-top: 20px;">
+                <h4>Danh sách khách mời & Lời chúc</h4>
+                <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -105,6 +117,14 @@
                 document.getElementById("invitationCard").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
             }, 1000);
+        }
+        function checkAdminAccess() {
+            let password = document.getElementById("adminPassword").value;
+            if (password === "123456") {
+                document.getElementById("adminContent").style.display = "block";
+            } else {
+                alert("Mật khẩu sai! Vui lòng thử lại.");
+            }
         }
     </script>
 </body>
