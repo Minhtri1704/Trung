@@ -20,7 +20,10 @@
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(to bottom, #FF66B2, #FF3399); /* Màu hồng đậm hơn cho thiệp */
+            background-image: url('assets/box_with_question_heart.png'); /* Thay đổi background */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -142,20 +145,6 @@
             width: 80%;
             text-align: center;
         }
-
-        /* Background cho phần "Khui blindbox cùng Trung và Yến" */
-        .question-heart-background {
-            background-image: url('assets/box_with_question_heart.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            padding: 50px 20px;
-            color: black;
-            font-size: 32px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -237,7 +226,6 @@
     </script>
 
     <div class="invitation-card" id="invitationCard">
-        <p style="color: black; font-size: 32px; font-weight: bold;">Khui blindbox cùng Trung và Yến nha</p>
         <div class="ribbon" onclick="openInvitation()">Mở Thiệp</div>
     </div>
 
@@ -268,14 +256,10 @@
             <button onclick="submitWish()">Gửi Lời Chúc</button>
         </div>
 
-        <div class="question-heart-background">
-            <p>Khui blindbox cùng Trung và Yến</p>
-        </div>
-
         <div class="countdown" id="countdown">0d 0h 0m 0s</div>
 
         <div class="thank-you-message" id="thankYouMessage">
-            <p>Cảm ơn mọi người rất nhiều! Sự hiện diện của mọi người là niềm vinh hạnh của tụi em.</p>
+            <p>Cảm ơn mọi người rất nhiều! Sự hiện diện của mọi người là niềm vinh hạnh của Trung và Yến.</p>
         </div>
     </div>
 
