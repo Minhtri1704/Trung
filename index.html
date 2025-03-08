@@ -72,7 +72,7 @@
     </div>
     
     <audio autoplay loop>
-        <source src="assets/beautiful_in_white.mp3" type="audio/mpeg">
+        <source src="assets/beautiful_in_white" type="audio/mpeg">
     </audio>
     <div class="container" id="mainContent" style="display: none;">
     <div class="love-symbols" style="font-size: 10px;">❤️ T & Q | 16 Years of Relationships | Endless Love ❤️</div>
@@ -87,13 +87,11 @@
     </div>
     <script>
         function openInvitation() {
-            document.getElementById("invitationCard").classList.add("hidden");
-            setTimeout(() => {
-                document.getElementById("invitationCard").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-            }, 1000);
-        }
-        function createFloatingSymbols() {
+        document.getElementById("invitationCard").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+}
+
+            function createFloatingSymbols() {
             const icons = ['💘', '❤️', '🐱', '🐱‍👤', '💌', '💞'];
             const container = document.querySelector('.floating-symbols');
             for (let i = 0; i < 20; i++) {
