@@ -8,7 +8,7 @@
         body {
             background: linear-gradient(to bottom, #ffcccc, #ffe6e6);
             text-align: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', serif;
             position: relative;
             overflow: hidden;
             animation: fadeIn 2s ease-in-out;
@@ -17,71 +17,51 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            position: relative;
-            z-index: 1;
-            animation: slideIn 1.5s ease-in-out;
-        }
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .invitation {
+        .invitation-card {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: red;
             display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            gap: 10px;
-            padding: 10px;
-            scroll-behavior: smooth;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 1000;
+            transition: opacity 1s ease-in-out;
         }
-        .invitation img {
-            width: 300px;
-            height: auto;
-            border-radius: 10px;
-            flex-shrink: 0;
+        .ribbon {
+            background: gold;
+            padding: 10px 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
             transition: transform 0.3s ease-in-out;
         }
-        .invitation img:hover {
+        .ribbon:hover {
             transform: scale(1.1);
         }
-        .sparkles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+        .hidden {
+            opacity: 0;
             pointer-events: none;
-        }
-        .rsvp-container, .wishes {
-            margin-top: 20px;
-            animation: fadeIn 2s ease-in-out;
-        }
-        button {
-            background-color: #ff6666;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #cc0000;
         }
     </style>
 </head>
 <body>
+    <div class="invitation-card" id="invitationCard">
+        <p>Khui blindbox cùng Trung và Yến nha</p>
+        <div class="ribbon" onclick="openInvitation()">Mở Thiệp</div>
+    </div>
+    
     <audio autoplay loop>
         <source src="assets/beautiful_in_white.mp3" type="audio/mpeg">
     </audio>
-    <div class="sparkles"></div>
-    <div class="container">
+    <div class="love-symbols">
+        ❤️ T & Q | 16 Years of Relationships | Endless Love ❤️
+    </div>
+    <div class="container" id="mainContent" style="display: none;">
         <div class="invitation">
             <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1">
             <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2">
@@ -101,35 +81,15 @@
             <button onclick="submitWish()">Gửi</button>
         </div>
     </div>
+
     <script>
-        function submitRSVP(attending) {
-            alert(attending ? "Cảm ơn bạn đã xác nhận tham dự!" : "Thật tiếc khi bạn không thể tham dự!");
+        function openInvitation() {
+            document.getElementById("invitationCard").classList.add("hidden");
+            setTimeout(() => {
+                document.getElementById("invitationCard").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            }, 1000);
         }
-        function submitWish() {
-            let message = document.getElementById("wishMessage").value;
-            if (message.trim() !== "") {
-                alert("Lời chúc của bạn đã được gửi: " + message);
-            } else {
-                alert("Vui lòng nhập lời chúc trước khi gửi!");
-            }
-        }
-        function createSparkles() {
-            const sparkleContainer = document.querySelector('.sparkles');
-            for (let i = 0; i < 50; i++) {
-                let sparkle = document.createElement('div');
-                sparkle.style.position = 'absolute';
-                sparkle.style.width = '5px';
-                sparkle.style.height = '5px';
-                sparkle.style.background = 'white';
-                sparkle.style.borderRadius = '50%';
-                sparkle.style.opacity = Math.random();
-                sparkle.style.top = Math.random() * 100 + 'vh';
-                sparkle.style.left = Math.random() * 100 + 'vw';
-                sparkle.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
-                sparkleContainer.appendChild(sparkle);
-            }
-        }
-        createSparkles();
     </script>
 </body>
 </html>
