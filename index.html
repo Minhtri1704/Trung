@@ -21,7 +21,7 @@
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background: url('assets/vietnamese_pattern.jpg') center/cover no-repeat;
+            background: linear-gradient(to bottom, #ff6699, #ff3366);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,6 +31,13 @@
             font-weight: bold;
             z-index: 1000;
             transition: opacity 1s ease-in-out;
+        }
+        .invitation-card.hidden {
+            animation: openGift 1s forwards;
+        }
+        @keyframes openGift {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; }
         }
         .ribbon {
             background: gold;
@@ -47,38 +54,46 @@
             opacity: 0;
             pointer-events: none;
         }
-        .love-symbols {
-            font-size: 26px;
-            font-weight: bold;
-            color: #ff1493;
+        .beach-symbols {
             position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            animation: marquee 10s linear infinite alternate;
+            top: 0;
+            font-size: 12px;
+            color: yellow;
+            opacity: 0.8;
+            animation: float 5s linear infinite;
         }
-        @keyframes marquee {
-            0% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-            100% { transform: translateX(-50%) translateY(0); }
-        }
-        .admin-panel {
-            margin-top: 20px;
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
+    <script>
+        function createBeachTheme() {
+            const icons = ['🌴', '☀', '🌊', '🍹', '🐚'];
+            for (let i = 0; i < 20; i++) {
+                let icon = document.createElement('div');
+                icon.className = 'beach-symbols';
+                icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = Math.random() * 100 + 'vw';
+                icon.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                document.body.appendChild(icon);
+            }
+        }
+        createBeachTheme();
+    </script>
     <div class="invitation-card" id="invitationCard">
         <p style="color: black; font-size: 32px; font-weight: bold;">Khui blindbox cùng Trung và Yến nha</p>
         <div class="ribbon" onclick="openInvitation()">Mở Thiệp</div>
     </div>
-    
-    <audio autoplay loop controls>
+    <audio id="backgroundMusic" loop>
         <source src="assets/beautiful_in_white.mp3" type="audio/mpeg">
     </audio>
+    <div class="love-symbols" style="display: none;">❤️ T & Q | 16 Years of Relationships | Endless Love ❤️</div>
     <div class="container" id="mainContent" style="display: none;">
-        <div class="love-symbols">❤️ T & Q | 16 Years of Relationships | Endless Love ❤️</div>
+        <div class="invitation">
+    <div class="container" id="mainContent" style="display: none;">
         <div class="invitation">
             <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" style="width: 150px; height: auto; border-radius: 10px;">
             <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" style="width: 150px; height: auto; border-radius: 10px;">
@@ -87,22 +102,23 @@
             <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" style="width: 150px; height: auto; border-radius: 10px;">
             <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" style="width: 150px; height: auto; border-radius: 10px;">
         </div>
-        <div class="rsvp-container">
+    </div>
     <script>
         function openInvitation() {
-        document.getElementById("invitationCard").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-}
-
-        createFloatingSymbols();
-        </div>
+            document.getElementById("invitationCard").classList.add("hidden");
+            setTimeout(() => {
+                document.getElementById("invitationCard").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+                document.getElementById("backgroundMusic").play();
+            }, 1000);
+        }
         <div class="rsvp-container">
-            <h3>Bạn sẽ đến tham dự với chúng mình chứ ^^</h3>
+            <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
             <button onclick="submitRSVP(true)">Có</button>
             <button onclick="submitRSVP(false)">Không</button>
         </div>
         <div class="wishes">
-            <h3>Gửi lời chúc cho đôi uyên ương ở đây nha</h3>
+            <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
             <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
             <button onclick="submitWish()">Gửi</button>
         </div>
@@ -116,9 +132,9 @@
             </div>
         </div>
     </div>
-   <script>
+    <script>
         function openInvitation() {
-            document.getElementById("invitationCard").style.opacity = "0";
+            document.getElementById("invitationCard").classList.add("hidden");
             setTimeout(() => {
                 document.getElementById("invitationCard").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
