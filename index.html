@@ -106,10 +106,10 @@
             margin-top: 30px;
             display: none;
         }
-        /* Cho phép cuộn trang */
-        .container {
+        /* Cho phép cuộn trang cho toàn bộ thiệp */
+        .main-content {
             overflow-y: scroll;
-            height: 80vh;
+            height: 100vh; /* Cuộn toàn bộ trang */
             padding: 20px;
         }
         /* Pop-up image */
@@ -230,7 +230,7 @@
         <source src="assets/beautiful_in_white.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="container" id="mainContent" style="display: none;">
+    <div class="main-content" id="mainContent" style="display: none;">
         <div class="invitation">
             <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_1.jpg')">
             <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_2.jpg')">
@@ -275,4 +275,3 @@
     </div>
 </body>
 </html>
-
