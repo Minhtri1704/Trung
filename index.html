@@ -121,6 +121,10 @@
         <div class="invitation">
             <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" style="width: 150px; height: auto; border-radius: 10px;">
             <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" style="width: 150px; height: auto; border-radius: 10px;">
+            <img src="assets/thiep_cuoi_3.jpg" alt="Thiệp Cưới 3" style="width: 150px; height: auto; border-radius: 10px;">
+            <img src="assets/thiep_cuoi_4.jpg" alt="Thiệp Cưới 4" style="width: 150px; height: auto; border-radius: 10px;">
+            <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5" style="width: 150px; height: auto; border-radius: 10px;">
+            <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" style="width: 150px; height: auto; border-radius: 10px;">
         </div>
     </div>
     <script>
@@ -144,6 +148,45 @@
             }
         }
         createFloatingSymbols();
+    </script>
+</div>
+        <div class="rsvp-container">
+            <h3>Bạn sẽ đến tham dự với chúng mình chứ ^^</h3>
+            <button onclick="submitRSVP(true)">Có</button>
+            <button onclick="submitRSVP(false)">Không</button>
+        </div>
+        <div class="wishes">
+            <h3>Gửi lời chúc cho đôi uyên ương ở đây nha</h3>
+            <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
+            <button onclick="submitWish()">Gửi</button>
+        </div>
+        <div class="admin-panel">
+            <h3>Quản lý phản hồi</h3>
+            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
+            <button onclick="checkAdminAccess()">Xem phản hồi</button>
+            <div id="adminContent" style="display: none; margin-top: 20px;">
+                <h4>Danh sách khách mời & Lời chúc</h4>
+                <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openInvitation() {
+            document.getElementById("invitationCard").classList.add("hidden");
+            setTimeout(() => {
+                document.getElementById("invitationCard").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            }, 1000);
+        }
+        function checkAdminAccess() {
+            let password = document.getElementById("adminPassword").value;
+            if (password === "123456") {
+                document.getElementById("adminContent").style.display = "block";
+            } else {
+                alert("Mật khẩu sai! Vui lòng thử lại.");
+            }
+        }
     </script>
 </body>
 </html>
