@@ -125,13 +125,13 @@
         .floating-img:hover {
             transform: scale(1.05);
         }
-        .rsvp-container, .countdown, .thank-you-message {
+        .rsvp-container, .wishes, .admin-panel, .countdown, .thank-you-message {
             margin-top: 40px;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 15px;
         }
-        .rsvp-container button {
+        .rsvp-container button, .wishes button {
             background: #FF66B2;
             color: white;
             padding: 10px 20px;
@@ -141,8 +141,12 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        .rsvp-container button:hover {
+        .rsvp-container button:hover, .wishes button:hover {
             background: #FF3399;
+        }
+        .admin-panel {
+            margin-top: 40px;
+            text-align: center;
         }
         .countdown {
             font-size: 32px;
@@ -192,44 +196,36 @@
             width: 80%;
             text-align: center;
         }
-
-        /* Định dạng dòng tin nhắn nổi bật */
-        .rsvp-container h3 {
-            font-size: 36px;
-            font-weight: bold;
-            color: #FF66B2;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
     <script>
-        function createFlowerTheme() {
-            const icons = ['🌸', '🌺', '💐'];
-            for (let i = 0; i < 20; i++) {
-                let icon = document.createElement('div');
-                icon.className = 'flower-symbols';
-                icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-                icon.style.left = Math.random() * 100 + 'vw';
-                icon.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                document.body.appendChild(icon);
+        let totalRSVP = 0;
+        let yesCount = 0;
+        let noCount = 0;
+
+        function updatePercentage() {
+            const yesPercentage = totalRSVP > 0 ? Math.round((yesCount / totalRSVP) * 100) : 0;
+            const noPercentage = totalRSVP > 0 ? Math.round((noCount / totalRSVP) * 100) : 0;
+
+            document.getElementById("rsvpStats").innerHTML = `Có: ${yesPercentage}% | Không: ${noPercentage}%`;
+        }
+
+        function submitRSVP(response) {
+            totalRSVP++;
+            if (response) {
+                yesCount++;
+            } else {
+                noCount++;
             }
+            updatePercentage();
+            alert("Cảm ơn bạn đã tham gia bình chọn!");
         }
-        createFlowerTheme();
 
-        function updateCountdown() {
-            const weddingDate = new Date("2025-05-10T00:00:00");  // Đếm ngược đến 10/05/2025
-            const now = new Date();
-            const timeRemaining = weddingDate - now;
-
-            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        function submitWish() {
+            let wish = document.getElementById("wishMessage").value;
+            console.log("Lời chúc: " + wish);
         }
-        setInterval(updateCountdown, 1000);
 
         function openInvitation() {
             document.getElementById("invitationCard").classList.add("hidden");
@@ -240,15 +236,15 @@
             }, 1000);
         }
 
-        function submitRSVP(response) {
-            console.log("RSVP submitted: " + (response ? "Có" : "Không"));
+        function checkAdminAccess() {
+            let password = document.getElementById("adminPassword").value;
+            if (password === "123456") {
+                document.getElementById("adminContent").style.display = "block";
+            } else {
+                alert("Mật khẩu sai! Vui lòng thử lại.");
+            }
         }
 
-        function showThankYou() {
-            document.getElementById("thankYouMessage").style.display = "block";
-        }
-
-        // Hàm mở pop-up hình ảnh
         function openImagePopup(imageSrc) {
             const popup = document.getElementById("imagePopup");
             const popupImage = document.getElementById("popupImage");
@@ -259,7 +255,6 @@
             popupContent.innerHTML = "Lời tâm sự của cô dâu và chú rể: Chúng mình rất mong được chào đón bạn trong ngày trọng đại của Trung và Yến nha!";
         }
 
-        // Hàm đóng pop-up
         function closePopup() {
             const popup = document.getElementById("imagePopup");
             popup.style.display = "none";
@@ -288,11 +283,28 @@
             <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6" class="floating-img" onclick="openImagePopup('assets/thiep_cuoi_6.jpg')">
         </div>
 
-        <!-- Các chức năng RSVP -->
+        <!-- Các chức năng RSVP và Lời chúc -->
         <div class="rsvp-container">
-            <h3>Hãy tham gia cùng chúng mình nhé ^^!</h3>
+            <h3 style="color: pink; font-size: 36px; font-weight: bold;">Hãy tham gia cùng chúng mình nhé ^^!</h3>
             <button onclick="submitRSVP(true)">Có</button>
             <button onclick="submitRSVP(false)">Không</button>
+            <p id="rsvpStats" style="font-size: 20px; font-weight: bold;"></p>
+        </div>
+
+        <div class="wishes">
+            <h3>Gửi lời chúc cho chúng mình nếu có thể </h3>
+            <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
+            <button onclick="submitWish()">Gửi</button>
+        </div>
+
+        <div class="admin-panel">
+            <h3>Quản lý phản hồi</h3>
+            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu quản trị">
+            <button onclick="checkAdminAccess()">Đăng nhập</button>
+            <div id="adminContent" style="display:none;">
+                <p>Xem danh sách khách mời đã tham gia</p>
+                <!-- Các tính năng quản lý khác ở đây -->
+            </div>
         </div>
 
         <!-- Đếm ngược -->
