@@ -21,7 +21,7 @@
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background: url('assets/vietnamese_pattern.jpg') center/cover no-repeat;
+            background: url('assets/vietnamese_pattern.jpg') center center / contain no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -125,9 +125,9 @@
             </div>
         </div>
     </div>
-    <script>
+   <script>
         function openInvitation() {
-            document.getElementById("invitationCard").classList.add("hidden");
+            document.getElementById("invitationCard").style.opacity = "0";
             setTimeout(() => {
                 document.getElementById("invitationCard").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
