@@ -26,8 +26,8 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            color: white;
-            font-size: 24px;
+            color: black;
+            font-size: 32px;
             font-weight: bold;
             z-index: 1000;
             transition: opacity 1s ease-in-out;
@@ -63,12 +63,49 @@
             50% { transform: translateX(-50%) translateY(-10px); }
             100% { transform: translateX(-50%) translateY(0); }
         }
-        .admin-panel {
-            margin-top: 20px;
+        .floating-symbols {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
+        .floating-symbols span {
+            position: absolute;
+            font-size: 30px;
+            color: #ff4d4d;
+            opacity: 0.8;
+            animation: float 6s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        .corner-TQ {
+            position: absolute;
+            font-size: 40px;
+            font-weight: bold;
+            color: red;
+            animation: glow 1.5s infinite alternate;
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px red; }
+            100% { text-shadow: 0 0 15px red; }
+        }
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
     </style>
 </head>
 <body>
+    <div class="floating-symbols"></div>
+    <div class="corner-TQ top-left">T&Q</div>
+    <div class="corner-TQ top-right">T&Q</div>
+    <div class="corner-TQ bottom-left">T&Q</div>
+    <div class="corner-TQ bottom-right">T&Q</div>
+    
     <div class="invitation-card" id="invitationCard">
         <p>Khui blindbox cùng Trung và Yến nha</p>
         <div class="ribbon" onclick="openInvitation()">Mở Thiệp</div>
@@ -82,34 +119,10 @@
     </div>
     <div class="container" id="mainContent" style="display: none;">
         <div class="invitation">
-            <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1">
-            <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2">
-            <img src="assets/thiep_cuoi_3.jpg" alt="Thiệp Cưới 3">
-            <img src="assets/thiep_cuoi_4.jpg" alt="Thiệp Cưới 4">
-            <img src="assets/thiep_cuoi_5.jpg" alt="Thiệp Cưới 5">
-            <img src="assets/thiep_cuoi_6.jpg" alt="Thiệp Cưới 6">
-        </div>
-        <div class="rsvp-container">
-            <h3>Bạn có tham dự không?</h3>
-            <button onclick="submitRSVP(true)">Có</button>
-            <button onclick="submitRSVP(false)">Không</button>
-        </div>
-        <div class="wishes">
-            <h3>Gửi lời chúc đến cô dâu chú rể</h3>
-            <textarea id="wishMessage" rows="4" cols="50" placeholder="Nhập lời chúc..."></textarea><br>
-            <button onclick="submitWish()">Gửi</button>
-        </div>
-        <div class="admin-panel">
-            <h3>Quản lý phản hồi</h3>
-            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
-            <button onclick="checkAdminAccess()">Xem phản hồi</button>
-            <div id="adminContent" style="display: none; margin-top: 20px;">
-                <h4>Danh sách khách mời & Lời chúc</h4>
-                <p>(Danh sách phản hồi sẽ hiển thị ở đây)</p>
-            </div>
+            <img src="assets/thiep_cuoi_1.jpg" alt="Thiệp Cưới 1" style="width: 150px; height: auto; border-radius: 10px;">
+            <img src="assets/thiep_cuoi_2.jpg" alt="Thiệp Cưới 2" style="width: 150px; height: auto; border-radius: 10px;">
         </div>
     </div>
-
     <script>
         function openInvitation() {
             document.getElementById("invitationCard").classList.add("hidden");
@@ -118,14 +131,19 @@
                 document.getElementById("mainContent").style.display = "block";
             }, 1000);
         }
-        function checkAdminAccess() {
-            let password = document.getElementById("adminPassword").value;
-            if (password === "123456") {
-                document.getElementById("adminContent").style.display = "block";
-            } else {
-                alert("Mật khẩu sai! Vui lòng thử lại.");
+        function createFloatingSymbols() {
+            const icons = ['💘', '❤️', '🐱', '🐱‍👤', '💌', '💞'];
+            const container = document.querySelector('.floating-symbols');
+            for (let i = 0; i < 20; i++) {
+                let icon = document.createElement('span');
+                icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = Math.random() * 100 + 'vw';
+                icon.style.top = Math.random() * 100 + 'vh';
+                icon.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(icon);
             }
         }
+        createFloatingSymbols();
     </script>
 </body>
 </html>
